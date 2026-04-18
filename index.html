@@ -1085,6 +1085,187 @@
         background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
         transition: width 0.15s linear;
       }
+
+      /* —— Gallery: swipe stack (Locket-style badge + tilted top card) —— */
+      .section--gallery .photo-swipe {
+        max-width: 380px;
+        margin: 0 auto;
+      }
+
+      .photo-swipe__frame {
+        position: relative;
+        margin: 0 auto;
+        padding: 0.35rem 0.45rem 0.65rem;
+        overflow: visible;
+      }
+
+      .photo-swipe__badge {
+        position: absolute;
+        top: 0.65rem;
+        right: 0.85rem;
+        z-index: 30;
+        padding: 0.28rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-variant-numeric: tabular-nums;
+        color: var(--fg);
+        background: rgba(14, 14, 17, 0.72);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        pointer-events: none;
+      }
+
+      .photo-swipe__badge:empty {
+        display: none;
+      }
+
+      .photo-swipe__stack {
+        position: relative;
+        height: min(520px, 72vh);
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+        overflow: visible;
+      }
+
+      .photo-swipe__stack.is-idle .photo-card {
+        cursor: grab;
+      }
+
+      .photo-swipe__stack.is-dragging .photo-card--active {
+        cursor: grabbing;
+      }
+
+      .photo-card {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        will-change: transform;
+        transition: opacity 0.35s var(--ease-out);
+      }
+
+      .photo-card--ghost {
+        pointer-events: none;
+      }
+
+      .photo-card--active {
+        z-index: 5;
+      }
+
+      .photo-card img,
+      .photo-card video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .photo-card video {
+        background: #0a0a0c;
+      }
+
+      .photo-card__footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1.25rem 1rem 1rem;
+        background: linear-gradient(
+          to top,
+          rgba(7, 7, 8, 0.92) 0%,
+          rgba(7, 7, 8, 0.4) 55%,
+          transparent 100%
+        );
+      }
+
+      .photo-card__caption {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--fg);
+        display: block;
+      }
+
+      .photo-card__caption:empty {
+        display: none;
+      }
+
+      .photo-swipe__btn {
+        font-family: inherit;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--fg);
+        cursor: pointer;
+        transition:
+          background 0.2s var(--ease-out),
+          border-color 0.2s var(--ease-out),
+          transform 0.15s var(--ease-out);
+      }
+
+      .photo-swipe__btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.14);
+      }
+
+      .photo-swipe__btn:active {
+        transform: scale(0.97);
+      }
+
+      .photo-swipe__btn:focus-visible {
+        outline: 2px solid var(--accent-b);
+        outline-offset: 3px;
+      }
+
+      .photo-swipe__btn--primary {
+        border-color: rgba(167, 139, 250, 0.45);
+        background: rgba(167, 139, 250, 0.12);
+      }
+
+      .photo-swipe__empty {
+        text-align: center;
+        padding: 2rem 1rem;
+        border-radius: var(--radius);
+        border: 1px dashed var(--border);
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .photo-swipe__empty strong {
+        color: var(--fg);
+      }
+
+      @media (max-width: 520px) {
+        .section--gallery .photo-swipe {
+          max-width: none;
+        }
+
+        .photo-swipe__stack {
+          height: min(480px, 68vh);
+        }
+
+        .photo-swipe__badge {
+          top: 0.55rem;
+          right: 0.65rem;
+          font-size: 0.68rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1095,6 +1276,7 @@
         <a href="#skills">Skills</a>
         <a href="#experience">Work</a>
         <a href="#projects">Projects</a>
+        <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -1371,6 +1553,56 @@
               <li><strong>Project lead</strong>, university research (2025) — AI for elementary Vietnamese reading.</li>
               <li><strong>HIU HEART Club</strong> (2024) · <strong>“Christmas for Kids”</strong> volunteer — Mai Hoa Shelter, Cu Chi.</li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="section section--gallery">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Gallery</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Swipe photos</h2>
+          <p class="lead" data-reveal data-reveal-delay="2" style="max-width: 36rem; margin-bottom: 1.75rem">
+            Vuốt thẻ sang trái hoặc phải để xem tiếp (ảnh hoặc video) — thẻ trên hơi nghiêng để lộ các thẻ phía sau.
+          </p>
+
+          <div
+            class="photo-swipe"
+            id="photo-swipe"
+            data-reveal
+            data-reveal-delay="3"
+          >
+            <div id="photo-swipe-empty" class="photo-swipe__empty" hidden>
+              <strong>Chưa có ảnh/video.</strong><br />
+              Thêm file vào <code style="color: var(--accent-b)">gallery/</code> và cập nhật mảng
+              <code style="color: var(--accent-b)">PHOTO_GALLERY_ITEMS</code> trong <code style="color: var(--accent-b)">index.html</code>
+              (ảnh JPG/PNG/WebP hoặc video MP4/WebM; video dùng <code style="color: var(--accent-b)">type: &quot;video&quot;</code>).
+            </div>
+
+            <div id="photo-swipe-inner" hidden>
+              <div class="photo-swipe__frame">
+                <div
+                  class="photo-swipe__badge"
+                  id="photo-swipe-badge"
+                  aria-live="polite"
+                ></div>
+                <div
+                  class="photo-swipe__stack is-idle"
+                  id="photo-swipe-stack"
+                  aria-roledescription="carousel"
+                  aria-label="Vuốt để xem ảnh"
+                ></div>
+              </div>
+            </div>
+
+            <div id="photo-swipe-done" class="photo-swipe__empty" hidden>
+              <strong>Đã xem hết ảnh.</strong><br />
+              Bấm nút để xem lại từ đầu.
+              <div style="margin-top: 1rem">
+                <button type="button" class="photo-swipe__btn photo-swipe__btn--primary" id="photo-swipe-reset">
+                  Xem lại
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2367,6 +2599,453 @@
         viewport.addEventListener("pointermove", onPointerMove);
         viewport.addEventListener("pointerup", onPointerUp);
         viewport.addEventListener("pointercancel", onPointerUp);
+      })();
+
+      /* Gallery: swipe — PHOTO_GALLERY_ITEMS (ảnh hoặc video trong gallery/)
+         Ảnh: { src, alt, caption }
+         Video: { type: "video", src, poster?, alt, caption } — poster = ảnh preview (tuỳ chọn) */
+      (function () {
+        var PHOTO_GALLERY_ITEMS = [
+          {
+            src: "gallery/photo-01.jpg",
+            alt: "Gallery 1",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-02.jpg",
+            alt: "Gallery 2",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-03.jpg",
+            alt: "Gallery 3",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-04.jpg",
+            alt: "Gallery 4",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-05.jpg",
+            alt: "Gallery 5",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-06.jpg",
+            alt: "Gallery 6",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-07.jpg",
+            alt: "Gallery 7",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-08.jpg",
+            alt: "Gallery 8",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-09.jpg",
+            alt: "Gallery 9",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-10.jpg",
+            alt: "Gallery 10",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-11.jpg",
+            alt: "Gallery 11",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-12.jpg",
+            alt: "Gallery 12",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-13.jpg",  
+            alt: "Gallery 13",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-13.jpg",  
+            alt: "Gallery 14",
+            caption: "",
+          },
+          {
+            src: "gallery/photo-13.jpg",  
+            alt: "Gallery 15",
+            caption: "",
+          },
+        ];
+
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+          .matches;
+        var stackEl = document.getElementById("photo-swipe-stack");
+        var innerEl = document.getElementById("photo-swipe-inner");
+        var emptyEl = document.getElementById("photo-swipe-empty");
+        var doneEl = document.getElementById("photo-swipe-done");
+        var badgeEl = document.getElementById("photo-swipe-badge");
+        var btnReset = document.getElementById("photo-swipe-reset");
+
+        if (!stackEl || !innerEl || !emptyEl || !doneEl || !badgeEl || !btnReset) {
+          return;
+        }
+
+        var galleryOriginal = PHOTO_GALLERY_ITEMS.slice();
+        var photos = [];
+        var totalCount = 0;
+
+        var drag = {
+          active: false,
+          card: null,
+          pointerId: null,
+          startX: 0,
+          startY: 0,
+          x: 0,
+          y: 0,
+          lastX: 0,
+          lastT: 0,
+          vx: 0,
+        };
+
+        var THRESH_PX = 96;
+        var THRESH_VEL = 0.38;
+        /* Thẻ trên nghiêng nhẹ khi đứng yên — lộ mép thẻ phía sau */
+        var IDLE_ROT = reduceMotion ? 0 : -4.25;
+        var ROT_K = reduceMotion ? 0.012 : 0.042;
+
+        function showEmptyState() {
+          emptyEl.hidden = false;
+          innerEl.hidden = true;
+          doneEl.hidden = true;
+        }
+
+        function showDoneState() {
+          emptyEl.hidden = true;
+          innerEl.hidden = true;
+          doneEl.hidden = false;
+        }
+
+        function showGalleryState() {
+          emptyEl.hidden = true;
+          innerEl.hidden = false;
+          doneEl.hidden = true;
+        }
+
+        function updateCounter() {
+          if (!totalCount || !photos.length) {
+            badgeEl.textContent = "";
+            return;
+          }
+          var n = totalCount - photos.length + 1;
+          badgeEl.textContent = n + " / " + totalCount;
+        }
+
+        function applyCardTransform(card, dx, dy) {
+          if (!card) return;
+          var rot = IDLE_ROT + dx * ROT_K;
+          card.style.transform =
+            "translate(" + dx + "px," + dy + "px) rotate(" + rot + "deg)";
+        }
+
+        function resetCardVisual(card) {
+          if (!card) return;
+          applyCardTransform(card, 0, 0);
+        }
+
+        function syncGalleryPlayback() {
+          var nodes = stackEl.querySelectorAll(".photo-card video");
+          var i;
+          for (i = 0; i < nodes.length; i++) {
+            var v = nodes[i];
+            var card = v.closest(".photo-card");
+            var isTop =
+              card && card.classList.contains("photo-card--active");
+            if (reduceMotion || !isTop) {
+              v.pause();
+              try {
+                v.currentTime = 0;
+              } catch (err) {}
+            } else {
+              var p = v.play();
+              if (p && p.catch) {
+                p.catch(function () {});
+              }
+            }
+          }
+        }
+
+        function buildCard(item, depth) {
+          var article = document.createElement("article");
+          article.className = "photo-card photo-card--ghost";
+          article.setAttribute("role", "group");
+
+          var scale = 1 - depth * 0.048;
+          var ty = depth * 14;
+          var tx = depth * 5;
+          var ghostRot = depth * 2.25;
+          article.style.transform =
+            "translate(" +
+            tx +
+            "px," +
+            ty +
+            "px) scale(" +
+            scale +
+            ") rotate(" +
+            ghostRot +
+            "deg)";
+          article.style.zIndex = String(4 - depth);
+          article.style.opacity = depth > 2 ? "0" : "1";
+
+          var isVideo = item.type === "video";
+
+          if (isVideo) {
+            var vid = document.createElement("video");
+            vid.src = item.src;
+            vid.setAttribute("playsinline", "");
+            vid.setAttribute("webkit-playsinline", "");
+            vid.playsInline = true;
+            vid.muted = true;
+            vid.loop = true;
+            vid.preload = depth === 0 ? "auto" : "none";
+            if (item.poster) {
+              vid.poster = item.poster;
+            }
+            vid.setAttribute(
+              "aria-label",
+              item.alt || "Video clip"
+            );
+            article.appendChild(vid);
+          } else {
+            var img = document.createElement("img");
+            img.src = item.src;
+            img.alt = item.alt || "";
+            img.loading = depth === 0 ? "eager" : "lazy";
+            img.decoding = "async";
+            article.appendChild(img);
+          }
+
+          var footer = document.createElement("div");
+          footer.className = "photo-card__footer";
+          var cap = document.createElement("span");
+          cap.className = "photo-card__caption";
+          if (item.caption) cap.textContent = item.caption;
+          footer.appendChild(cap);
+          article.appendChild(footer);
+
+          return article;
+        }
+
+        function renderStack() {
+          stackEl.innerHTML = "";
+          if (!photos.length) {
+            showDoneState();
+            return;
+          }
+
+          showGalleryState();
+          var show = Math.min(3, photos.length);
+          var i;
+          for (i = 0; i < show; i++) {
+            var card = buildCard(photos[i], i);
+            if (i === 0) {
+              card.classList.remove("photo-card--ghost");
+              card.classList.add("photo-card--active");
+              card.style.opacity = "1";
+              applyCardTransform(card, 0, 0);
+            }
+            stackEl.appendChild(card);
+          }
+
+          stackEl.classList.add("is-idle");
+          stackEl.classList.remove("is-dragging");
+          updateCounter();
+          syncGalleryPlayback();
+        }
+
+        function finishSwipe(direction, skipAnimate) {
+          /* direction -1 = trái (PASS), +1 = phải (LIKE) */
+          var active = stackEl.querySelector(".photo-card--active");
+          if (!active || !photos.length) return;
+
+          var w = stackEl.getBoundingClientRect().width || 360;
+          var exitX = direction > 0 ? w * 1.35 : -w * 1.35;
+          var exitRot =
+            IDLE_ROT + (direction > 0 ? 22 : -22);
+
+          function afterRemove() {
+            photos.shift();
+            renderStack();
+          }
+
+          if (skipAnimate || reduceMotion) {
+            photos.shift();
+            renderStack();
+            return;
+          }
+
+          active.style.transition =
+            "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1)";
+          active.style.transform =
+            "translate(" +
+            exitX +
+            "px, 0) rotate(" +
+            exitRot +
+            "deg)";
+
+          var cleaned = false;
+          function doneOnce() {
+            if (cleaned) return;
+            cleaned = true;
+            active.removeEventListener("transitionend", doneOnce);
+            afterRemove();
+          }
+
+          active.addEventListener("transitionend", doneOnce);
+          window.setTimeout(doneOnce, 480);
+        }
+
+        function onStackPointerDown(e) {
+          if (e.button != null && e.button !== 0) return;
+          var card = e.target.closest(".photo-card--active");
+          if (!card) return;
+
+          drag.active = true;
+          drag.card = card;
+          drag.pointerId = e.pointerId;
+          drag.startX = e.clientX;
+          drag.startY = e.clientY;
+          drag.x = 0;
+          drag.y = 0;
+          drag.lastX = e.clientX;
+          drag.lastT = performance.now();
+          drag.vx = 0;
+
+          card.style.transition = "none";
+          stackEl.classList.remove("is-idle");
+          stackEl.classList.add("is-dragging");
+
+          try {
+            stackEl.setPointerCapture(e.pointerId);
+          } catch (err) {}
+        }
+
+        function onStackPointerMove(e) {
+          if (!drag.active || e.pointerId !== drag.pointerId || !drag.card)
+            return;
+
+          var now = performance.now();
+          var dt = Math.max(1, now - drag.lastT);
+          drag.vx = (e.clientX - drag.lastX) / dt;
+          drag.lastX = e.clientX;
+          drag.lastT = now;
+
+          drag.x = e.clientX - drag.startX;
+          drag.y = (e.clientY - drag.startY) * 0.35;
+          applyCardTransform(drag.card, drag.x, drag.y);
+        }
+
+        function onStackPointerUp(e) {
+          if (!drag.active || e.pointerId !== drag.pointerId) return;
+
+          var card = drag.card;
+          drag.active = false;
+          drag.card = null;
+
+          stackEl.classList.add("is-idle");
+          stackEl.classList.remove("is-dragging");
+
+          try {
+            stackEl.releasePointerCapture(e.pointerId);
+          } catch (err) {}
+
+          drag.pointerId = null;
+
+          if (!card) return;
+
+          var dx = drag.x;
+          var vx = drag.vx;
+
+          if (
+            dx > THRESH_PX ||
+            (vx > THRESH_VEL && dx > 26)
+          ) {
+            finishSwipe(1, false);
+            return;
+          }
+          if (
+            dx < -THRESH_PX ||
+            (vx < -THRESH_VEL && dx < -26)
+          ) {
+            finishSwipe(-1, false);
+            return;
+          }
+
+          card.style.transition =
+            "transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1)";
+          resetCardVisual(card);
+        }
+
+        stackEl.addEventListener("pointerdown", onStackPointerDown);
+        stackEl.addEventListener("pointermove", onStackPointerMove);
+        stackEl.addEventListener("pointerup", onStackPointerUp);
+        stackEl.addEventListener("pointercancel", onStackPointerUp);
+
+        btnReset.addEventListener("click", function () {
+          photos = galleryOriginal.slice();
+          renderStack();
+        });
+
+        function galleryInView() {
+          var g = document.getElementById("gallery");
+          if (!g) return false;
+          var r = g.getBoundingClientRect();
+          var h = window.innerHeight || document.documentElement.clientHeight;
+          return r.bottom > h * 0.2 && r.top < h * 0.85;
+        }
+
+        document.addEventListener("keydown", function (e) {
+          if (doneEl.hidden === false || innerEl.hidden || !photos.length)
+            return;
+          if (!galleryInView()) return;
+          if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            finishSwipe(-1, reduceMotion);
+          } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            finishSwipe(1, reduceMotion);
+          }
+        });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) {
+            stackEl.querySelectorAll("video").forEach(function (v) {
+              v.pause();
+            });
+          } else {
+            syncGalleryPlayback();
+          }
+        });
+
+        function initGallery() {
+          galleryOriginal = PHOTO_GALLERY_ITEMS.slice();
+          totalCount = galleryOriginal.length;
+
+          if (!totalCount) {
+            showEmptyState();
+            return;
+          }
+
+          photos = galleryOriginal.slice();
+          renderStack();
+        }
+
+        initGallery();
       })();
     </script>
   </body>
