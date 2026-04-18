@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Pham Chi Khanh — Software Developer Intern. Web, mobile, AI."
+    />
+    <title>Pham Chi Khanh · Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Syne:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #070708;
+        --bg-elevated: #0e0e11;
+        --fg: #f4f4f5;
+        --muted: rgba(244, 244, 245, 0.62);
+        --border: rgba(255, 255, 255, 0.07);
+        --accent-a: #a78bfa;
+        --accent-b: #38bdf8;
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        --radius: 14px;
+        --nav-h: 56px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--accent-b);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        height: var(--nav-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 clamp(1rem, 4vw, 2rem);
+        background: rgba(7, 7, 8, 0.72);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .site-header__brand {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+      }
+
+      .site-header__brand span {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .site-nav {
+        display: flex;
+        gap: clamp(0.5rem, 2vw, 1.25rem);
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .site-nav a {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .site-nav a:hover {
+        color: var(--fg);
+        text-decoration: none;
+      }
+
+      main {
+        padding-top: var(--nav-h);
+      }
+
+      /* —— Hero / canvas —— */
+      .sequence-hero {
+        position: relative;
+        margin-top: calc(-1 * var(--nav-h));
+        height: 420vh;
+      }
+
+      .sequence-hero__sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        background: #050506;
+      }
+
+      #sequence-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .sequence-hero__blackout {
+        position: absolute;
+        inset: 0;
+        background: #000;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .sequence-hero__overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: clamp(1.25rem, 4vw, 3rem);
+        padding-bottom: clamp(2rem, 5vw, 3.5rem);
+        background: linear-gradient(
+          to top,
+          rgba(5, 5, 6, 0.94) 0%,
+          rgba(5, 5, 6, 0.38) 45%,
+          transparent 76%
+        );
+        z-index: 3;
+        transition: opacity 0.05s linear;
+      }
+
+      .sequence-hero__hint {
+        position: absolute;
+        top: clamp(4rem, 10vw, 6rem);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        opacity: 0;
+        transition: opacity 0.55s var(--ease-out);
+        z-index: 4;
+      }
+
+      .sequence-hero__hint.is-visible {
+        opacity: 1;
+      }
+
+      .sequence-hero__title {
+        margin: 0 0 0.35rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.1rem, 6vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.02;
+      }
+
+      .sequence-hero__role {
+        margin: 0 0 0.85rem;
+        font-size: clamp(0.85rem, 2vw, 1rem);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(167, 139, 250, 0.95);
+        font-weight: 600;
+      }
+
+      .sequence-hero__subtitle {
+        margin: 0;
+        max-width: 38ch;
+        font-size: clamp(0.95rem, 1.65vw, 1.08rem);
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .sequence-hero__progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.06);
+        z-index: 4;
+      }
+
+      .sequence-hero__progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      }
+
+      /* —— Sections —— */
+      .section {
+        position: relative;
+        padding: clamp(3.5rem, 10vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+        border-top: 1px solid var(--border);
+      }
+
+      .section:first-of-type {
+        border-top: none;
+      }
+
+      .shell {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+
+      /* —— Experience: video nền, chữ phía trên —— */
+      .section--experience-bg {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        min-height: min(52vh, 560px);
+      }
+
+      .experience-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+
+      .experience-bg__video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ưu tiên phần dưới khung — gần giữ độ sáng/màu như clip trong Projects */
+        object-position: center bottom;
+        pointer-events: none;
+        transform: scale(1.06);
+      }
+
+      /* Scrim nhẹ — không phủ tối toàn phần để video không “bị bệt” như trước */
+      .experience-bg__scrim {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(6, 6, 9, 0.14) 0%,
+            transparent 42%
+          ),
+          linear-gradient(
+            to top,
+            rgba(7, 7, 10, 0.42) 0%,
+            rgba(7, 7, 10, 0.12) 48%,
+            transparent 78%
+          );
+        pointer-events: none;
+      }
+
+      .section--experience-bg .shell {
+        position: relative;
+        z-index: 1;
+      }
+
+      /*
+        Video vẫn nhìn xuyên được: nền rất trong + blur cực nhẹ.
+        Chữ giữ đọc được nhờ viền sáng card + đổ bóng text (không che hết khung clip).
+      */
+      .section--experience-bg .timeline-card {
+        background: linear-gradient(
+          165deg,
+          rgba(6, 8, 14, 0.14) 0%,
+          rgba(10, 12, 18, 0.11) 100%
+        );
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.14),
+          0 12px 36px rgba(0, 0, 0, 0.22);
+      }
+
+      .section--experience-bg .section__eyebrow {
+        color: rgba(56, 189, 248, 0.95);
+        text-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.95),
+          0 2px 14px rgba(0, 0, 0, 0.65);
+      }
+
+      .section--experience-bg .section__title {
+        text-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.95),
+          0 4px 24px rgba(0, 0, 0, 0.55);
+      }
+
+      .section--experience-bg .timeline-card__title {
+        color: #fff;
+        text-shadow:
+          0 0 3px rgba(0, 0, 0, 1),
+          0 1px 4px rgba(0, 0, 0, 0.98),
+          0 3px 18px rgba(0, 0, 0, 0.75),
+          0 0 32px rgba(0, 0, 0, 0.45);
+      }
+
+      .section--experience-bg .timeline-card__date,
+      .section--experience-bg .timeline-card ul,
+      .section--experience-bg .timeline-card li {
+        color: rgba(252, 252, 253, 0.96);
+        text-shadow:
+          0 0 2px rgba(0, 0, 0, 1),
+          0 1px 4px rgba(0, 0, 0, 0.95),
+          0 2px 14px rgba(0, 0, 0, 0.78),
+          0 0 22px rgba(0, 0, 0, 0.42);
+      }
+
+      .section--experience-bg .timeline-card__org {
+        color: rgba(252, 252, 253, 0.93);
+        text-shadow:
+          0 0 2px rgba(0, 0, 0, 1),
+          0 1px 4px rgba(0, 0, 0, 0.92),
+          0 2px 14px rgba(0, 0, 0, 0.72);
+      }
+
+      .section__eyebrow {
+        margin: 0 0 0.5rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(56, 189, 248, 0.85);
+        font-weight: 600;
+      }
+
+      .section__title {
+        margin: 0 0 1.75rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.65rem, 4vw, 2.35rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .lead {
+        margin: 0;
+        max-width: 65ch;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.75;
+      }
+
+      .chip-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.75rem;
+      }
+
+      .chip {
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 0.82rem;
+        color: var(--fg);
+      }
+
+      .timeline-card {
+        padding: 1.35rem 1.45rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        margin-bottom: 1rem;
+      }
+
+      .timeline-card:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline-card__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 1rem;
+        align-items: baseline;
+        margin-bottom: 0.65rem;
+      }
+
+      .timeline-card__title {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      .timeline-card__date {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .timeline-card__org {
+        margin: 0 0 0.65rem;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .timeline-card ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: var(--muted);
+      }
+
+      .timeline-card li {
+        margin-bottom: 0.45rem;
+      }
+
+      .timeline-card li:last-child {
+        margin-bottom: 0;
+      }
+
+      .project-grid {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      @media (min-width: 780px) {
+        .project-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .project-card {
+        padding: 1.35rem 1.45rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          155deg,
+          rgba(167, 139, 250, 0.06),
+          rgba(56, 189, 248, 0.04)
+        );
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      .project-card h3 {
+        margin: 0 0 0.35rem;
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+      }
+
+      .project-card .project-card__period {
+        margin: 0 0 0.85rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .project-card p {
+        margin: 0 0 0.65rem;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .project-card ul {
+        margin: 0 0 1rem;
+        padding-left: 1.1rem;
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      .project-card .demo-link {
+        margin-top: auto;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .two-col {
+        display: grid;
+        gap: 2rem;
+      }
+
+      @media (min-width: 720px) {
+        .two-col {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* —— Skills: video phủ full .skills-sphere-wrap, cầu + hint phía trên —— */
+      .skills-sphere-wrap {
+        position: relative;
+        margin-top: 1.25rem;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: var(--radius);
+        isolation: isolate;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+      }
+
+      .skills-sphere-wrap__bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .skills-sphere-wrap__video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center bottom;
+        transform: scale(1.06);
+      }
+
+      .skills-sphere-wrap__scrim {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(6, 6, 9, 0.18) 0%,
+            transparent 46%
+          ),
+          linear-gradient(
+            to top,
+            rgba(7, 7, 10, 0.48) 0%,
+            rgba(7, 7, 10, 0.12) 52%,
+            transparent 82%
+          );
+      }
+
+      .skills-sphere-wrap__inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: clamp(0.05rem, 0.9vw, 0.35rem) clamp(0.65rem, 2vw, 1rem)
+          clamp(1.15rem, 3vw, 1.5rem);
+      }
+
+      .skills-sphere {
+        --sphere-size: min(400px, 94vw);
+      }
+
+      .skills-sphere__viewport {
+        width: var(--sphere-size);
+        height: var(--sphere-size);
+        margin: -1.25rem auto 0;
+        perspective: 1000px;
+        perspective-origin: 50% 45%;
+        position: relative;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+        overflow: hidden;
+        border-radius: var(--radius);
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+
+      .skills-sphere__viewport.is-dragging {
+        cursor: grabbing;
+      }
+
+      .skills-sphere__viewport:focus-visible {
+        outline: 2px solid var(--accent-b);
+        outline-offset: 4px;
+      }
+
+      .skills-sphere__track {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      .skills-sphere__track .skills-sphere__item {
+        pointer-events: auto;
+      }
+
+      .skills-sphere__item {
+        position: absolute;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        pointer-events: auto;
+      }
+
+      .skills-sphere__viewport.is-dragging .skills-sphere__item {
+        cursor: grabbing;
+      }
+
+      @keyframes skills-logo-glow {
+        0%,
+        100% {
+          box-shadow:
+            0 0 10px rgba(56, 189, 248, 0.42),
+            0 0 22px rgba(167, 139, 250, 0.32),
+            0 0 34px rgba(56, 189, 248, 0.14),
+            0 10px 28px rgba(0, 0, 0, 0.42);
+        }
+        50% {
+          box-shadow:
+            0 0 16px rgba(56, 189, 248, 0.72),
+            0 0 34px rgba(167, 139, 250, 0.52),
+            0 0 48px rgba(56, 189, 248, 0.22),
+            0 10px 28px rgba(0, 0, 0, 0.42);
+        }
+      }
+
+      .skills-sphere__item-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        box-shadow:
+          0 0 12px rgba(56, 189, 248, 0.45),
+          0 0 26px rgba(167, 139, 250, 0.35),
+          0 10px 28px rgba(0, 0, 0, 0.45);
+        background: rgba(14, 14, 17, 0.35);
+        transition: transform 0.2s var(--ease-out), box-shadow 0.35s var(--ease-out);
+        animation: skills-logo-glow 3s ease-in-out infinite;
+      }
+
+      .skills-sphere__item:hover .skills-sphere__item-inner {
+        transform: scale(1.15);
+        animation: none;
+        box-shadow:
+          0 0 22px rgba(56, 189, 248, 0.95),
+          0 0 42px rgba(167, 139, 250, 0.65),
+          0 0 56px rgba(56, 189, 248, 0.35),
+          0 12px 32px rgba(0, 0, 0, 0.45);
+      }
+
+      .skills-sphere__item img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        pointer-events: none;
+        filter:
+          drop-shadow(0 0 4px rgba(56, 189, 248, 0.65))
+          drop-shadow(0 0 12px rgba(167, 139, 250, 0.45))
+          drop-shadow(0 0 20px rgba(56, 189, 248, 0.22));
+      }
+
+      .skills-sphere__item:hover img {
+        filter:
+          drop-shadow(0 0 8px rgba(56, 189, 248, 0.95))
+          drop-shadow(0 0 18px rgba(167, 139, 250, 0.75))
+          drop-shadow(0 0 28px rgba(56, 189, 248, 0.45));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .skills-sphere__item-inner {
+          transition: none;
+          animation: none;
+          box-shadow:
+            0 0 12px rgba(56, 189, 248, 0.38),
+            0 0 22px rgba(167, 139, 250, 0.28),
+            0 10px 28px rgba(0, 0, 0, 0.45);
+        }
+
+        .skills-sphere__item:hover .skills-sphere__item-inner {
+          transform: none;
+          box-shadow:
+            0 0 18px rgba(56, 189, 248, 0.55),
+            0 0 30px rgba(167, 139, 250, 0.38),
+            0 10px 28px rgba(0, 0, 0, 0.45);
+        }
+      }
+
+      .skill-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1rem, 4vw, 2rem);
+      }
+
+      .skill-modal[hidden] {
+        display: none;
+      }
+
+      .skill-modal__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(4px);
+      }
+
+      .skill-modal__panel {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        padding: 2.5rem 1.75rem 2rem;
+        border-radius: 18px;
+        background: #ffffff;
+        color: #0a0a0a;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+        z-index: 1;
+        text-align: center;
+      }
+
+      .skill-modal__close {
+        position: absolute;
+        top: 0.9rem;
+        right: 0.9rem;
+        width: 2.1rem;
+        height: 2.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #0a0a0a;
+        color: #fff;
+        font-size: 1.3rem;
+        line-height: 1;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+      }
+
+      .skill-modal__close:hover {
+        background: #2a2a2a;
+        transform: scale(1.04);
+      }
+
+      .skill-modal__close:focus-visible {
+        outline: 2px solid var(--accent-b);
+        outline-offset: 2px;
+      }
+
+      .skill-modal__logo {
+        display: block;
+        width: min(9.5rem, 48vw);
+        height: min(9.5rem, 48vw);
+        margin: 0 auto 1.25rem;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.12));
+      }
+
+      .skill-modal__title {
+        margin: 0 0 0.5rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.35rem, 3.4vw, 1.75rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #0a0a0a;
+      }
+
+      .skill-modal__desc {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #64748b;
+        max-width: 32ch;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .skill-modal__close {
+          transition: none;
+        }
+      }
+
+      .list-plain {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .list-plain li {
+        padding: 0.85rem 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .list-plain li:last-child {
+        border-bottom: none;
+      }
+
+      .list-plain strong {
+        color: var(--fg);
+        font-weight: 600;
+      }
+
+      /* Khối Contact: email/SĐT + dock xếp dọc, căn trái */
+      .contact-intro {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.15rem;
+        width: 100%;
+      }
+
+      .contact-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .contact-strip__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.5rem;
+        align-items: center;
+      }
+
+      .contact-strip__links a {
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+
+      /* Dock liên hệ — chỉ icon đang hover mới phóng to */
+      .contact-dock-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .contact-dock {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        row-gap: 0.65rem;
+        padding: 0.55rem 0.85rem 0.55rem 0.65rem;
+        max-width: 100%;
+        margin: 0;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+      }
+
+      .contact-dock__item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        color: inherit;
+        text-decoration: none;
+        transform: scale(1);
+        transform-origin: 50% 50%;
+        transition: transform 0.22s var(--ease-out), box-shadow 0.22s ease;
+        z-index: 1;
+      }
+
+      .contact-dock__item:hover,
+      .contact-dock__item:focus-visible {
+        transform: scale(1.18);
+        z-index: 2;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .contact-dock__item {
+          transition: none;
+        }
+
+        .contact-dock__item:hover,
+        .contact-dock__item:focus-visible {
+          transform: none;
+        }
+      }
+
+      .contact-dock__item svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+      }
+
+      .contact-dock__label {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        padding: 0.28rem 0.5rem;
+        border-radius: 8px;
+        background: rgba(8, 8, 10, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--fg);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+        z-index: 2;
+      }
+
+      .contact-dock__item:hover .contact-dock__label,
+      .contact-dock__item:focus-visible .contact-dock__label {
+        opacity: 1;
+      }
+
+      .contact-dock__item:focus-visible {
+        outline: 2px solid var(--accent-b);
+        outline-offset: 2px;
+      }
+
+      .contact-dock__item--github {
+        background: rgba(255, 255, 255, 0.08);
+        color: #f4f4f5;
+      }
+
+      .contact-dock__item--instagram {
+        background: rgba(236, 72, 153, 0.14);
+        color: #ec4899;
+      }
+
+      .contact-dock__item--linkedin {
+        background: rgba(29, 78, 216, 0.16);
+        color: #60a5fa;
+      }
+
+      .contact-dock__item--facebook {
+        background: rgba(37, 99, 235, 0.14);
+        color: #3b82f6;
+      }
+
+      .contact-dock__item--youtube {
+        background: rgba(220, 38, 38, 0.14);
+        color: #f87171;
+      }
+
+      @media (max-width: 520px) {
+        .contact-dock {
+          padding: 0.65rem 0.75rem;
+          gap: 0.42rem;
+        }
+
+        .contact-dock__item {
+          width: 36px;
+          height: 36px;
+        }
+
+        .contact-dock__item svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .footer-note {
+        margin: 2rem 0 0;
+        font-size: 0.82rem;
+        color: rgba(244, 244, 245, 0.35);
+      }
+
+      /*
+        Scroll reveal — lặp khi cuộn xuống / lên: ra khỏi viewport là nhạt đi,
+        vào lại là nảy + overshoot (cubic-bezier > 1).
+      */
+      [data-reveal] {
+        opacity: 0;
+        transform: translate3d(0, 64px, 0) scale(0.88);
+        filter: blur(8px);
+        transition:
+          opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.68s cubic-bezier(0.28, 1.85, 0.48, 1),
+          filter 0.36s ease;
+        transition-delay: 0s !important;
+      }
+
+      [data-reveal].is-inview {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        filter: blur(0);
+      }
+
+      [data-reveal].is-inview[data-reveal-delay="1"] {
+        transition-delay: 0.07s !important;
+      }
+
+      [data-reveal].is-inview[data-reveal-delay="2"] {
+        transition-delay: 0.14s !important;
+      }
+
+      [data-reveal].is-inview[data-reveal-delay="3"] {
+        transition-delay: 0.21s !important;
+      }
+
+      [data-reveal].is-inview[data-reveal-delay="4"] {
+        transition-delay: 0.28s !important;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+          filter: none;
+          transition: none;
+        }
+      }
+
+      .loading {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #050506;
+        z-index: 100;
+        transition:
+          opacity 0.55s var(--ease-out),
+          visibility 0.55s;
+      }
+
+      .loading.is-done {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .loading__inner {
+        text-align: center;
+      }
+
+      .loading__label {
+        margin: 0 0 0.75rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .loading__bar {
+        width: min(240px, 70vw);
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .loading__bar-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+        transition: width 0.15s linear;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#top" class="site-header__brand">Pham Chi Khanh <span>· Dev</span></a>
+      <nav class="site-nav" aria-label="Mục chính">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div id="loading" class="loading" aria-live="polite">
+      <div class="loading__inner">
+        <p class="loading__label">Đang tải khung hình…</p>
+        <div class="loading__bar">
+          <div id="loading-fill" class="loading__bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <main id="top">
+      <section
+        id="sequence-section"
+        class="sequence-hero"
+        aria-label="Giới thiệu — cuộn để xem chuỗi hình"
+      >
+        <div class="sequence-hero__sticky">
+          <canvas id="sequence-canvas" aria-hidden="true"></canvas>
+          <div class="sequence-hero__blackout" id="hero-blackout" aria-hidden="true"></div>
+          <div class="sequence-hero__hint" id="scroll-hint">Cuộn</div>
+          <div class="sequence-hero__overlay" id="hero-overlay">
+            <p class="sequence-hero__role">Software Developer Intern</p>
+            <h1 class="sequence-hero__title">Pham Chi Khanh</h1>
+            <p class="sequence-hero__subtitle">
+              Web · Mobile · AI — building practical products and learning fast in team
+              environments.
+            </p>
+          </div>
+          <div class="sequence-hero__progress" aria-hidden="true">
+            <div id="sequence-progress-bar" class="sequence-hero__progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Overview</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Career objective</h2>
+          <p class="lead" data-reveal data-reveal-delay="2">
+            IT student targeting a Software Developer Intern role where I can apply experience in
+            web/mobile development and AI-based applications — contributing to real systems,
+            sharpening engineering practice, and growing with scalable, impactful products.
+          </p>
+          <div class="chip-grid" data-reveal data-reveal-delay="3">
+            <span class="chip">Ho Chi Minh City, Vietnam</span>
+            <span class="chip">Hong Bang International University · IT · 2022 — Present · GPA 3.37/4</span>
+            <span class="chip">Scholarships · 3 consecutive semesters</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Capabilities</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Skills</h2>
+          <div class="skills-sphere-wrap" data-reveal data-reveal-delay="2">
+            <div class="skills-sphere-wrap__bg" aria-hidden="true">
+              <video
+                class="skills-sphere-wrap__video portfolio-video"
+                data-inview-play
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              ></video>
+              <div class="skills-sphere-wrap__scrim"></div>
+            </div>
+            <div class="skills-sphere-wrap__inner">
+              <div
+                class="skills-sphere"
+                id="skills-sphere"
+                data-sphere-container="400"
+                data-sphere-radius="150"
+                data-drag-sens="0.7"
+                data-momentum="0.92"
+                data-autorotate="0.5"
+              >
+                <div
+                  class="skills-sphere__viewport"
+                  id="skills-sphere-viewport"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Interactive 3D sphere of technology icons over video. Drag to rotate."
+                >
+                  <div class="skills-sphere__track" id="skills-sphere-track" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col" style="margin-top: 2.25rem">
+            <div data-reveal data-reveal-delay="3">
+              <p style="margin: 0 0 0.65rem; font-weight: 600">Languages</p>
+              <div class="chip-grid">
+                <span class="chip">Python</span>
+                <span class="chip">Java</span>
+                <span class="chip">C / C++</span>
+                <span class="chip">JavaScript</span>
+              </div>
+            </div>
+            <div data-reveal data-reveal-delay="3">
+              <p style="margin: 0 0 0.65rem; font-weight: 600">Frameworks & tools</p>
+              <div class="chip-grid">
+                <span class="chip">React</span>
+                <span class="chip">React Native</span>
+                <span class="chip">Node.js</span>
+                <span class="chip">Spring Boot</span>
+                <span class="chip">REST APIs</span>
+                <span class="chip">Git</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 1.75rem" data-reveal data-reveal-delay="4">
+            <p style="margin: 0 0 0.65rem; font-weight: 600">AI & data</p>
+            <div class="chip-grid">
+              <span class="chip">OpenCV</span>
+              <span class="chip">Deep Learning</span>
+              <span class="chip">GenAI · LLMs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section section--experience-bg">
+        <div class="experience-bg" aria-hidden="true">
+          <video
+            class="experience-bg__video portfolio-video"
+            data-inview-play
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+          <div class="experience-bg__scrim"></div>
+        </div>
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Experience</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Work</h2>
+          <article class="timeline-card" data-reveal data-reveal-delay="2">
+            <div class="timeline-card__meta">
+              <h3 class="timeline-card__title">Full-stack Mobile Development Intern</h3>
+              <p class="timeline-card__date">Sept 2025 — Dec 2025</p>
+            </div>
+            <p class="timeline-card__org">
+              XCODI Service Trading Co., Ltd
+            </p>
+            <ul>
+              <li>
+                Designed and developed cross-platform mobile apps (iOS/Android) with React Native.
+              </li>
+              <li>
+                Built RESTful API systems with Node.js — data processing and LLM integration.
+              </li>
+              <li>
+                Optimized text workflows to turn complex documents into simplified content for
+                elementary students.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Portfolio</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Academic projects</h2>
+
+          <div class="project-grid">
+            <article class="project-card" data-reveal data-reveal-delay="2">
+              <h3>AI Rice Leaf Disease Detection</h3>
+              <p class="project-card__period">Aug 2024 — Nov 2024 · Personal</p>
+              <p>
+                Mobile app for farmers: disease ID from camera/gallery, AI chatbot with STT/TTS,
+                weather integration.
+              </p>
+              <ul>
+                <li>Image processing & AI pipeline</li>
+              </ul>
+              <a
+                class="demo-link"
+                href="https://youtu.be/FrZvsWWy-CA"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch demo →</a
+              >
+            </article>
+            <article class="project-card" data-reveal data-reveal-delay="2">
+              <h3>Rubik’s Cube Solving Robot</h3>
+              <p class="project-card__period">Apr 2025 — Jun 2025 · Personal</p>
+              <p>
+                Mechatronics + vision + control: 6-arm 3D-printed robot, Arduino, OpenCV & deep
+                learning for colors, Kociemba in real time.
+              </p>
+              <ul>
+                <li>Embedded control & ML</li>
+              </ul>
+              <a
+                class="demo-link"
+                href="https://youtube.com/shorts/iaDn7RZTE5A"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch demo →</a
+              >
+            </article>
+            <article class="project-card" data-reveal data-reveal-delay="3">
+              <h3>Elementary Vietnamese Reading Summarization</h3>
+              <p class="project-card__period">Jan 2026 — Apr 2026 · Personal</p>
+              <p>
+                Dataset of 9,263 passages; PhoBERT & ViT5 fine-tuning; difficulty control for grades
+                1–5; strong ROUGE / BLEU / BERTScore.
+              </p>
+              <ul>
+                <li>NLP · multi-task learning · education</li>
+              </ul>
+              <a
+                class="demo-link"
+                href="https://youtu.be/hrCDV15MfpQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Watch demo →</a
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="awards" class="section">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Recognition</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Competitions & certifications</h2>
+          <ul class="list-plain" data-reveal data-reveal-delay="2">
+            <li>
+              <strong>Consolation prize — 27th Euréka Student Scientific Research Award</strong>
+              (Oct 2025) · Story & reading summarization for elementary students.
+            </li>
+            <li>
+              <strong>Vocational Certificate in Informatics — Excellent</strong> (Jun 2018) · Long
+              An Department of Education and Training.
+            </li>
+            <li>
+              <strong>MOS Excel & MOS Word</strong> (Jul 2025) · Microsoft Office Specialist.
+            </li>
+            <li>
+              <strong>VSTEP English — Level 3/6</strong> (Mar 2026) · Hong Bang International
+              University (B1 equivalent).
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="more" class="section">
+        <div class="shell two-col">
+          <div data-reveal>
+            <p class="section__eyebrow">Languages</p>
+            <h2 class="section__title" style="margin-bottom: 1rem">Communication</h2>
+            <p class="lead" style="font-size: 0.98rem">
+              Vietnamese — native · English — intermediate (VSTEP 3/6, ~B1).
+            </p>
+          </div>
+          <div data-reveal data-reveal-delay="1">
+            <p class="section__eyebrow">Activities</p>
+            <h2 class="section__title" style="margin-bottom: 1rem">Community & leadership</h2>
+            <ul class="list-plain">
+              <li><strong>Vice President</strong>, Computer Science Club (2024) — workshops on programming & AI.</li>
+              <li><strong>Project lead</strong>, university research (2025) — AI for elementary Vietnamese reading.</li>
+              <li><strong>HIU HEART Club</strong> (2024) · <strong>“Christmas for Kids”</strong> volunteer — Mai Hoa Shelter, Cu Chi.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section" style="padding-bottom: 4rem">
+        <div class="shell">
+          <p class="section__eyebrow" data-reveal>Contact</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="1">Let’s talk</h2>
+
+          <div class="contact-intro">
+            <div class="contact-strip" data-reveal data-reveal-delay="2">
+              <div class="contact-strip__links">
+                <a href="mailto:khanhpc7824@gmail.com">khanhpc7824@gmail.com</a>
+                <a href="tel:+84385763613">+84 385 763 613</a>
+              </div>
+            </div>
+
+            <div class="contact-dock-wrap" data-reveal data-reveal-delay="3">
+              <nav class="contact-dock" aria-label="Social profiles">
+              <a
+                class="contact-dock__item contact-dock__item--github"
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                  />
+                </svg>
+                <span class="contact-dock__label">GitHub</span>
+              </a>
+              <a
+                class="contact-dock__item contact-dock__item--instagram"
+                href="https://instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+                <span class="contact-dock__label">Instagram</span>
+              </a>
+              <a
+                class="contact-dock__item contact-dock__item--linkedin"
+                href="https://www.linkedin.com/in/YOUR_PROFILE/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                <span class="contact-dock__label">LinkedIn</span>
+              </a>
+              <a
+                class="contact-dock__item contact-dock__item--facebook"
+                href="https://facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                <span class="contact-dock__label">Facebook</span>
+              </a>
+              <a
+                class="contact-dock__item contact-dock__item--youtube"
+                href="https://youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+                <span class="contact-dock__label">YouTube</span>
+              </a>
+              </nav>
+            </div>
+          </div>
+
+          <p class="footer-note">© Pham Chi Khanh · Portfolio</p>
+        </div>
+      </section>
+
+      <div
+        id="skill-detail-modal"
+        class="skill-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="skill-modal-title"
+        hidden
+      >
+        <div class="skill-modal__backdrop" data-skill-modal-close tabindex="-1"></div>
+        <div class="skill-modal__panel">
+          <button type="button" class="skill-modal__close" id="skill-modal-close-btn" aria-label="Đóng">
+            <span aria-hidden="true">×</span>
+          </button>
+          <img
+            id="skill-modal-logo"
+            class="skill-modal__logo"
+            src=""
+            alt=""
+            width="152"
+            height="152"
+            decoding="async"
+          />
+          <h3 id="skill-modal-title" class="skill-modal__title"></h3>
+          <p id="skill-modal-desc" class="skill-modal__desc"></p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var FRAME_COUNT = 240;
+        var FRAME_PAD = 3;
+        var FRAME_PREFIX = "Pic_version1/ezgif-frame-";
+        /* Cuối đoạn scrub: phủ đen dần — cuộn xuống hết thì toàn màn đen, cuộn lên không “giật” sáng */
+        var BLACKOUT_START = 0.74;
+
+        var section = document.getElementById("sequence-section");
+        var canvas = document.getElementById("sequence-canvas");
+        var ctx = canvas.getContext("2d", { alpha: false });
+        var loadingEl = document.getElementById("loading");
+        var loadingFill = document.getElementById("loading-fill");
+        var progressBar = document.getElementById("sequence-progress-bar");
+        var hintEl = document.getElementById("scroll-hint");
+        var heroBlackout = document.getElementById("hero-blackout");
+        var heroOverlay = document.getElementById("hero-overlay");
+
+        var images = new Array(FRAME_COUNT);
+        var readyCount = 0;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var lastDrawn = -1;
+        var scrollTicking = false;
+        var layoutW = 0;
+        var layoutH = 0;
+        var layoutDpr = 0;
+
+        function frameUrl(index) {
+          var n = index + 1;
+          var s = String(n);
+          while (s.length < FRAME_PAD) s = "0" + s;
+          return FRAME_PREFIX + s + ".png";
+        }
+
+        function resizeCanvasIfNeeded() {
+          var w = window.innerWidth;
+          var h = window.innerHeight;
+          var nextDpr = Math.min(window.devicePixelRatio || 1, 2);
+          if (w === layoutW && h === layoutH && nextDpr === layoutDpr) {
+            return false;
+          }
+          layoutW = w;
+          layoutH = h;
+          layoutDpr = nextDpr;
+          dpr = nextDpr;
+          canvas.width = Math.floor(w * dpr);
+          canvas.height = Math.floor(h * dpr);
+          canvas.style.width = w + "px";
+          canvas.style.height = h + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.imageSmoothingEnabled = true;
+          if ("imageSmoothingQuality" in ctx) {
+            ctx.imageSmoothingQuality = "high";
+          }
+          return true;
+        }
+
+        function drawCover(img) {
+          var cw = window.innerWidth;
+          var ch = window.innerHeight;
+          if (!img || !img.complete || !img.naturalWidth) return;
+          ctx.fillStyle = "#050506";
+          ctx.fillRect(0, 0, cw, ch);
+          var iw = img.naturalWidth;
+          var ih = img.naturalHeight;
+          var scale = Math.max(cw / iw, ch / ih);
+          var dw = iw * scale;
+          var dh = ih * scale;
+          var dx = (cw - dw) * 0.5;
+          var dy = (ch - dh) * 0.5;
+          ctx.drawImage(img, dx, dy, dw, dh);
+        }
+
+        function scrollProgress() {
+          var start = section.offsetTop;
+          var total = Math.max(1, section.offsetHeight - window.innerHeight);
+          var p = (window.scrollY - start) / total;
+          return Math.min(1, Math.max(0, p));
+        }
+
+        function frameIndexFromProgress(p) {
+          var idx = Math.round(p * (FRAME_COUNT - 1));
+          return Math.min(FRAME_COUNT - 1, Math.max(0, idx));
+        }
+
+        function updateHeroEndFade(p) {
+          var k = (p - BLACKOUT_START) / (1 - BLACKOUT_START);
+          var fade = Math.min(1, Math.max(0, k));
+          heroBlackout.style.opacity = String(fade);
+          /* Chữ và thanh progress mờ dần theo nền đen */
+          heroOverlay.style.opacity = String(1 - fade * 0.92);
+          progressBar.parentElement.style.opacity = String(1 - fade * 0.85);
+        }
+
+        function paint() {
+          var p = scrollProgress();
+          progressBar.style.width = p * 100 + "%";
+          updateHeroEndFade(p);
+
+          var idx = frameIndexFromProgress(p);
+          if (idx === lastDrawn) return;
+          var img = images[idx];
+          if (img && img.complete && img.naturalWidth) {
+            drawCover(img);
+            lastDrawn = idx;
+          } else {
+            for (var d = 0; d < FRAME_COUNT; d++) {
+              var tryIdx = idx - d;
+              if (tryIdx >= 0 && images[tryIdx] && images[tryIdx].complete) {
+                drawCover(images[tryIdx]);
+                lastDrawn = tryIdx;
+                break;
+              }
+              var tryIdx2 = idx + d;
+              if (
+                tryIdx2 < FRAME_COUNT &&
+                images[tryIdx2] &&
+                images[tryIdx2].complete
+              ) {
+                drawCover(images[tryIdx2]);
+                lastDrawn = tryIdx2;
+                break;
+              }
+            }
+          }
+        }
+
+        function updateScrollHint() {
+          if (document.documentElement.scrollTop < window.innerHeight * 0.12) {
+            hintEl.classList.add("is-visible");
+          } else {
+            hintEl.classList.remove("is-visible");
+          }
+        }
+
+        function onScroll() {
+          if (!scrollTicking) {
+            scrollTicking = true;
+            requestAnimationFrame(function () {
+              scrollTicking = false;
+              updateScrollHint();
+              paint();
+            });
+          }
+        }
+
+        function onResize() {
+          requestAnimationFrame(function () {
+            if (resizeCanvasIfNeeded()) {
+              lastDrawn = -1;
+            }
+            updateScrollHint();
+            paint();
+          });
+        }
+
+        function preload() {
+          var onOne = function () {
+            readyCount++;
+            loadingFill.style.width =
+              Math.round((readyCount / FRAME_COUNT) * 100) + "%";
+            if (readyCount === FRAME_COUNT) {
+              loadingEl.classList.add("is-done");
+              resizeCanvasIfNeeded();
+              lastDrawn = -1;
+              paint();
+              hintEl.classList.add("is-visible");
+            }
+          };
+
+          for (var i = 0; i < FRAME_COUNT; i++) {
+            (function (index) {
+              var im = new Image();
+              im.decoding = "async";
+              im.onload = onOne;
+              im.onerror = onOne;
+              im.src = frameUrl(index);
+              images[index] = im;
+            })(i);
+          }
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onResize);
+
+        preload();
+        resizeCanvasIfNeeded();
+      })();
+
+      /* Scroll reveal: nội dung “bật” lên khi section vào khung nhìn */
+      (function () {
+        var nodes = document.querySelectorAll("[data-reveal]");
+        if (!nodes.length || !("IntersectionObserver" in window)) {
+          nodes.forEach(function (el) {
+            el.classList.add("is-inview");
+          });
+          return;
+        }
+
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduce) {
+          nodes.forEach(function (el) {
+            el.classList.add("is-inview");
+          });
+          return;
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-inview");
+              } else {
+                e.target.classList.remove("is-inview");
+              }
+            });
+          },
+          { threshold: 0.11, rootMargin: "0px 0px -10% 0px" }
+        );
+
+        nodes.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+
+      /* Video: phát khi vào viewport, tạm dừng khi ra; nút Sound */
+      (function () {
+        var vids = document.querySelectorAll("video[data-inview-play]");
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        vids.forEach(function (v) {
+          var row = v.closest(".video-feature__inner");
+          var soundBtn = row && row.querySelector(".js-video-sound");
+          if (soundBtn) {
+            soundBtn.addEventListener("click", function () {
+              v.muted = !v.muted;
+              soundBtn.setAttribute("aria-pressed", v.muted ? "false" : "true");
+              soundBtn.textContent = v.muted ? "Sound off" : "Sound on";
+              v.play().catch(function () {});
+            });
+          }
+        });
+
+        if (reduce) {
+          vids.forEach(function (v) {
+            v.pause();
+          });
+          return;
+        }
+
+        if (!("IntersectionObserver" in window)) {
+          vids.forEach(function (v) {
+            v.play().catch(function () {});
+          });
+          return;
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              var v = e.target;
+              if (e.isIntersecting) {
+                v.play().catch(function () {});
+              } else {
+                v.pause();
+              }
+            });
+          },
+          { threshold: 0.2, rootMargin: "0px 0px -5% 0px" }
+        );
+
+        vids.forEach(function (v) {
+          io.observe(v);
+        });
+      })();
+
+      /* Skills: 3D sphere of tech logos + click mở modal chi tiết */
+      (function () {
+        var track = document.getElementById("skills-sphere-track");
+        var viewport = document.getElementById("skills-sphere-viewport");
+        var root = document.getElementById("skills-sphere");
+        var modal = document.getElementById("skill-detail-modal");
+        var modalLogo = document.getElementById("skill-modal-logo");
+        var modalTitle = document.getElementById("skill-modal-title");
+        var modalDesc = document.getElementById("skill-modal-desc");
+        var modalCloseBtn = document.getElementById("skill-modal-close-btn");
+        if (!track || !viewport || !root) return;
+
+        var techLogos = [
+          {
+            id: "1",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/python/default.svg",
+            alt: "Python",
+            title: "Python",
+            description: "Ngôn ngữ đa năng cho backend, ML và scripting.",
+          },
+          {
+            id: "2",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/java/default.svg",
+            alt: "Java",
+            title: "Java",
+            description: "Nền tảng phổ biến cho enterprise và Android.",
+          },
+          {
+            id: "3",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/c/default.svg",
+            alt: "C",
+            title: "C",
+            description: "Hệ thống và lập trình hiệu năng gần phần cứng.",
+          },
+          {
+            id: "4",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cplusplus/default.svg",
+            alt: "C++",
+            title: "C++",
+            description: "Hiệu năng cao và OOP cho hệ thống lớn.",
+          },
+          {
+            id: "5",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/javascript/default.svg",
+            alt: "JavaScript",
+            title: "JavaScript",
+            description: "Ngôn ngữ lõi của web và runtime hiện đại.",
+          },
+          {
+            id: "6",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/react/default.svg",
+            alt: "React",
+            title: "React",
+            description: "UI components và ecosystem front-end.",
+          },
+          {
+            id: "7",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/nodedotjs/default.svg",
+            alt: "Node.js",
+            title: "Node.js",
+            description: "JavaScript phía server và công cụ tooling.",
+          },
+          {
+            id: "8",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/spring-boot/default.svg",
+            alt: "Spring Boot",
+            title: "Spring Boot",
+            description: "REST API và microservices trên JVM.",
+          },
+          {
+            id: "9",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/git/default.svg",
+            alt: "Git",
+            title: "Git",
+            description: "Version control và làm việc nhóm.",
+          },
+          {
+            id: "10",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/opencv/default.svg",
+            alt: "OpenCV",
+            title: "OpenCV",
+            description: "Thị giác máy tính và xử lý ảnh.",
+          },
+          {
+            id: "11",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/aws-aws-deep-learning-amis/default.svg",
+            alt: "AWS Deep Learning AMIs",
+            title: "AWS Deep Learning AMIs",
+            description: "Môi trường GPU/AWS cho huấn luyện và inference.",
+          },
+          {
+            id: "12",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/csharp/default.svg",
+            alt: "C#",
+            title: "C#",
+            description: ".NET và phát triển ứng dụng đa nền tảng.",
+          },
+          {
+            id: "13",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/html5/default.svg",
+            alt: "HTML5",
+            title: "HTML5",
+            description: "Markup semantic và trải nghiệm web.",
+          },
+          {
+            id: "14",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/css/default.svg",
+            alt: "CSS",
+            title: "CSS",
+            description: "Layout, responsive và motion UI.",
+          },
+          {
+            id: "15",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bootstrap/default.svg",
+            alt: "Bootstrap",
+            title: "Bootstrap",
+            description: "Components UI và layout nhanh.",
+          },
+          {
+            id: "16",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/dotnet/default.svg",
+            alt: ".NET",
+            title: ".NET",
+            description: "Framework ứng dụng và thư viện chính thức.",
+          },
+          {
+            id: "17",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/visual-studio-code/default.svg",
+            alt: "Visual Studio Code",
+            title: "Visual Studio Code",
+            description: "Editor, debug và extensions phát triển hàng ngày.",
+          },
+          {
+            id: "18",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/postgresql/default.svg",
+            alt: "PostgreSQL",
+            title: "PostgreSQL",
+            description: "Cơ sở dữ liệu quan hệ mạnh và mở rộng.",
+          },
+          {
+            id: "19",
+            src: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/android/default.svg",
+            alt: "Android",
+            title: "Android",
+            description: "Phát triển ứng dụng mobile native.",
+          },
+        ];
+
+        var sphereRadiusAttr = parseFloat(root.getAttribute("data-sphere-radius"));
+        var sens = parseFloat(root.getAttribute("data-drag-sens")) || 0.7;
+        var momentumDecay = parseFloat(root.getAttribute("data-momentum")) || 0.95;
+        var autoSpeed = parseFloat(root.getAttribute("data-autorotate")) || 0.5;
+        var dragSensBase = parseFloat(root.getAttribute("data-drag-base")) || 0.5;
+        var maxRotationSpeed = parseFloat(root.getAttribute("data-max-rot")) || 5;
+        var baseImageScale =
+          parseFloat(root.getAttribute("data-base-scale")) || 0.12;
+        var perspectivePx =
+          parseFloat(root.getAttribute("data-perspective")) || 1000;
+
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        var n = techLogos.length;
+
+        function degRad(d) {
+          return (d * Math.PI) / 180;
+        }
+
+        function normalizeAngle(angle) {
+          while (angle > 180) angle -= 360;
+          while (angle < -180) angle += 360;
+          return angle;
+        }
+
+        function clampRotationSpeed(speed) {
+          return Math.max(-maxRotationSpeed, Math.min(maxRotationSpeed, speed));
+        }
+
+        function fauxRand(i, salt) {
+          var x = Math.sin(i * 12.9898 + salt * 78.233) * 43758.5453123;
+          return x - Math.floor(x);
+        }
+
+        function generateSpherePositions(count, radius) {
+          var goldenRatio = (1 + Math.sqrt(5)) / 2;
+          var angleIncrement = (2 * Math.PI) / goldenRatio;
+          var positions = [];
+          var i;
+          var t;
+          var inclination;
+          var azimuth;
+          var phi;
+          var theta;
+          var poleBonus;
+          var randomOffset;
+          for (i = 0; i < count; i++) {
+            t = count ? i / count : 0;
+            inclination = Math.acos(1 - 2 * t);
+            azimuth = angleIncrement * i;
+            phi = inclination * (180 / Math.PI);
+            theta = ((azimuth * (180 / Math.PI)) % 360);
+            poleBonus = Math.pow(Math.abs(phi - 90) / 90, 0.6) * 35;
+            if (phi < 90) phi = Math.max(5, phi - poleBonus);
+            else phi = Math.min(175, phi + poleBonus);
+            phi = 15 + (phi / 180) * 150;
+            randomOffset = (fauxRand(i, 0) - 0.5) * 20;
+            theta = (theta + randomOffset) % 360;
+            phi = Math.max(
+              0,
+              Math.min(180, phi + (fauxRand(i, 1) - 0.5) * 10)
+            );
+            positions.push({ theta: theta, phi: phi, radius: radius });
+          }
+          return positions;
+        }
+
+        function calculateWorldPositions(
+          imagePositions,
+          rotation,
+          actualR,
+          baseImageSize
+        ) {
+          var rotXRad = degRad(rotation.x);
+          var rotYRad = degRad(rotation.y);
+          var fadeZoneStart = -10;
+          var fadeZoneEnd = -30;
+          var positions = [];
+          var i;
+          var pos;
+          var thetaRad;
+          var phiRad;
+          var x;
+          var y;
+          var z;
+          var x1;
+          var z1;
+          var y2;
+          var z2;
+          var fadeOpacity;
+          var isVisible;
+          var isPoleImage;
+          var distanceFromCenter;
+          var distanceRatio;
+          var distancePenalty;
+          var centerScale;
+          var depthScale;
+          var scale;
+
+          for (i = 0; i < imagePositions.length; i++) {
+            pos = imagePositions[i];
+            thetaRad = degRad(pos.theta);
+            phiRad = degRad(pos.phi);
+            x =
+              pos.radius *
+              Math.sin(phiRad) *
+              Math.cos(thetaRad);
+            y = pos.radius * Math.cos(phiRad);
+            z =
+              pos.radius *
+              Math.sin(phiRad) *
+              Math.sin(thetaRad);
+
+            x1 = x * Math.cos(rotYRad) + z * Math.sin(rotYRad);
+            z1 = -x * Math.sin(rotYRad) + z * Math.cos(rotYRad);
+            x = x1;
+            z = z1;
+
+            y2 = y * Math.cos(rotXRad) - z * Math.sin(rotXRad);
+            z2 = y * Math.sin(rotXRad) + z * Math.cos(rotXRad);
+            y = y2;
+            z = z2;
+
+            fadeOpacity = 1;
+            if (z <= fadeZoneEnd) fadeOpacity = 0;
+            else if (z <= fadeZoneStart) {
+              fadeOpacity = Math.max(
+                0,
+                (z - fadeZoneEnd) / (fadeZoneStart - fadeZoneEnd)
+              );
+            }
+            isVisible = z > fadeZoneEnd;
+
+            isPoleImage = pos.phi < 30 || pos.phi > 150;
+            distanceFromCenter = Math.sqrt(x * x + y * y);
+            distanceRatio = Math.min(distanceFromCenter / actualR, 1);
+            distancePenalty = isPoleImage ? 0.4 : 0.7;
+            centerScale = Math.max(0.3, 1 - distanceRatio * distancePenalty);
+            depthScale = (z + actualR) / (2 * actualR);
+            scale =
+              centerScale * Math.max(0.5, 0.8 + depthScale * 0.3);
+
+            positions.push({
+              x: x,
+              y: y,
+              z: z,
+              scale: scale,
+              zIndex: Math.round(
+                24 +
+                  ((z + actualR) / (2 * actualR)) * 28
+              ),
+              isVisible: isVisible,
+              fadeOpacity: fadeOpacity,
+              originalIndex: i,
+            });
+          }
+
+          var adjusted = positions.map(function (p) {
+            return {
+              x: p.x,
+              y: p.y,
+              z: p.z,
+              scale: p.scale,
+              zIndex: p.zIndex,
+              isVisible: p.isVisible,
+              fadeOpacity: p.fadeOpacity,
+              originalIndex: p.originalIndex,
+            };
+          });
+          var ii;
+          var jj;
+          var posi;
+          var posj;
+          var dx;
+          var dy;
+          var dist;
+          var imageSize;
+          var otherSize;
+          var minDistance;
+          var overlap;
+          var reductionFactor;
+          var adjScale;
+          for (ii = 0; ii < adjusted.length; ii++) {
+            posi = adjusted[ii];
+            if (!posi.isVisible) continue;
+            adjScale = posi.scale;
+            imageSize = baseImageSize * adjScale;
+            for (jj = 0; jj < adjusted.length; jj++) {
+              if (ii === jj) continue;
+              posj = adjusted[jj];
+              if (!posj.isVisible) continue;
+              otherSize = baseImageSize * posj.scale;
+              dx = posi.x - posj.x;
+              dy = posi.y - posj.y;
+              dist = Math.sqrt(dx * dx + dy * dy);
+              minDistance = (imageSize + otherSize) / 2 + 25;
+              if (dist < minDistance && dist > 0) {
+                overlap = minDistance - dist;
+                reductionFactor = Math.max(
+                  0.4,
+                  1 - (overlap / minDistance) * 0.6
+                );
+                adjScale = Math.min(
+                  adjScale,
+                  adjScale * reductionFactor
+                );
+              }
+            }
+            adjusted[ii].scale = Math.max(0.25, adjScale);
+          }
+          return adjusted;
+        }
+
+        function measureContainerSize() {
+          var w = viewport.offsetWidth || root.offsetWidth;
+          return Math.max(220, Math.min(440, w || 400));
+        }
+
+        var containerSize = measureContainerSize();
+        var actualSphereRadius =
+          sphereRadiusAttr || containerSize * 0.5;
+        viewport.style.perspective = perspectivePx + "px";
+
+        var imagePositions = generateSpherePositions(n, actualSphereRadius);
+        var rotation = { x: 15, y: 15, z: 0 };
+        var velocity = { x: 0, y: 0 };
+        var items = [];
+
+        for (var i = 0; i < n; i++) {
+          var logo = techLogos[i];
+          var item = document.createElement("div");
+          item.className = "skills-sphere__item";
+          item.setAttribute("data-id", logo.id);
+          item.setAttribute("data-title", logo.title);
+          item.setAttribute("data-description", logo.description);
+          item.title = logo.title + " — " + logo.description;
+
+          var inner = document.createElement("div");
+          inner.className = "skills-sphere__item-inner";
+
+          var img = document.createElement("img");
+          img.src = logo.src;
+          img.alt = logo.alt;
+          img.loading = i < 3 ? "eager" : "lazy";
+          img.decoding = "async";
+          img.draggable = false;
+
+          inner.appendChild(img);
+          item.appendChild(inner);
+          track.appendChild(item);
+          items.push({ el: item });
+        }
+
+        var spherePointerDown = false;
+        var sphereRotating = false;
+        var candidateItem = null;
+        var startX = 0;
+        var startY = 0;
+        var lastX = 0;
+        var lastY = 0;
+        var pointerId = null;
+        var DRAG_THRESHOLD = 12;
+        var lastFrameTime = null;
+
+        function paintSphere() {
+          var baseImageSize = containerSize * baseImageScale;
+          var world = calculateWorldPositions(
+            imagePositions,
+            rotation,
+            actualSphereRadius,
+            baseImageSize
+          );
+          var wi;
+          var wp;
+          var itemEl;
+          var imageSize;
+          var left;
+          var top;
+          for (wi = 0; wi < items.length; wi++) {
+            wp = world[wi];
+            itemEl = items[wi].el;
+            if (!wp.isVisible || wp.fadeOpacity <= 0.02) {
+              itemEl.style.visibility = "hidden";
+              itemEl.style.pointerEvents = "none";
+              continue;
+            }
+            itemEl.style.visibility = "visible";
+            itemEl.style.pointerEvents = "auto";
+            imageSize = baseImageSize * wp.scale;
+            left = containerSize / 2 + wp.x;
+            top = containerSize / 2 + wp.y;
+            itemEl.style.width = imageSize + "px";
+            itemEl.style.height = imageSize + "px";
+            itemEl.style.left = left + "px";
+            itemEl.style.top = top + "px";
+            itemEl.style.zIndex = String(wp.zIndex);
+            itemEl.style.opacity = String(wp.fadeOpacity);
+          }
+        }
+
+        /* ~SphereImageGrid: autoRotateSpeed mỗi “khung @60fps” + momentum */
+        function onFrame(now) {
+          now = now != null ? now : performance.now();
+          if (lastFrameTime == null) lastFrameTime = now;
+          var dt = Math.min(0.052, Math.max(0, (now - lastFrameTime) / 1000));
+          lastFrameTime = now;
+          var scale = dt * 60;
+
+          if (!reduce && !spherePointerDown) {
+            velocity.x *= Math.pow(momentumDecay, scale);
+            velocity.y *= Math.pow(momentumDecay, scale);
+            if (Math.abs(velocity.x) < 0.01) velocity.x = 0;
+            if (Math.abs(velocity.y) < 0.01) velocity.y = 0;
+
+            var autoStep = autoSpeed * 0.6 * scale;
+            rotation.y = normalizeAngle(
+              rotation.y + autoStep + clampRotationSpeed(velocity.y)
+            );
+            rotation.x = normalizeAngle(
+              rotation.x + clampRotationSpeed(velocity.x)
+            );
+          }
+
+          paintSphere();
+
+          if (!reduce) {
+            requestAnimationFrame(onFrame);
+          }
+        }
+
+        if (!reduce) {
+          requestAnimationFrame(onFrame);
+        } else {
+          paintSphere();
+        }
+
+        window.addEventListener(
+          "resize",
+          function () {
+            containerSize = measureContainerSize();
+            actualSphereRadius =
+              sphereRadiusAttr || containerSize * 0.5;
+            imagePositions = generateSpherePositions(n, actualSphereRadius);
+            paintSphere();
+          },
+          { passive: true }
+        );
+
+        function openSkillModal(item) {
+          if (!modal || !modalLogo || !modalTitle || !modalDesc || !item) return;
+          var img = item.querySelector("img");
+          if (!img) return;
+          modalLogo.src = img.src;
+          modalLogo.alt = img.alt || "";
+          modalTitle.textContent =
+            item.getAttribute("data-title") || img.alt || "";
+          modalDesc.textContent = item.getAttribute("data-description") || "";
+          modal.removeAttribute("hidden");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          if (modalCloseBtn) modalCloseBtn.focus();
+        }
+
+        function closeSkillModal() {
+          if (!modal) return;
+          modal.setAttribute("hidden", "");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+
+        if (modal && modalCloseBtn) {
+          modalCloseBtn.addEventListener("click", closeSkillModal);
+          modal.querySelectorAll("[data-skill-modal-close]").forEach(function (el) {
+            el.addEventListener("click", function (e) {
+              if (e.target === el) closeSkillModal();
+            });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !modal.hasAttribute("hidden")) {
+              closeSkillModal();
+            }
+          });
+        }
+
+        function onPointerDown(e) {
+          if (e.button != null && e.button !== 0) return;
+          spherePointerDown = true;
+          sphereRotating = false;
+          pointerId = e.pointerId;
+          startX = lastX = e.clientX;
+          startY = lastY = e.clientY;
+          candidateItem = e.target.closest(".skills-sphere__item");
+          velocity.x = 0;
+          velocity.y = 0;
+          try {
+            viewport.setPointerCapture(e.pointerId);
+          } catch (err) {}
+        }
+
+        function onPointerMove(e) {
+          if (e.pointerId !== pointerId) return;
+          var dx = e.clientX - lastX;
+          var dy = e.clientY - lastY;
+          var dist0 = Math.hypot(e.clientX - startX, e.clientY - startY);
+          if (dist0 > DRAG_THRESHOLD) {
+            if (!sphereRotating) {
+              sphereRotating = true;
+              candidateItem = null;
+              viewport.classList.add("is-dragging");
+              lastX = e.clientX;
+              lastY = e.clientY;
+              return;
+            }
+          }
+          if (!sphereRotating) return;
+          lastX = e.clientX;
+          lastY = e.clientY;
+          var rdx = -dy * dragSensBase * sens;
+          var rdy = dx * dragSensBase * sens;
+          rotation.x = normalizeAngle(
+            rotation.x + clampRotationSpeed(rdx)
+          );
+          rotation.y = normalizeAngle(
+            rotation.y + clampRotationSpeed(rdy)
+          );
+          velocity.x = clampRotationSpeed(rdx);
+          velocity.y = clampRotationSpeed(rdy);
+          paintSphere();
+        }
+
+        function onPointerUp(e) {
+          if (e.pointerId !== pointerId) return;
+          if (!sphereRotating && candidateItem) {
+            openSkillModal(candidateItem);
+          }
+          spherePointerDown = false;
+          sphereRotating = false;
+          candidateItem = null;
+          pointerId = null;
+          viewport.classList.remove("is-dragging");
+          try {
+            viewport.releasePointerCapture(e.pointerId);
+          } catch (err) {}
+        }
+
+        viewport.addEventListener("pointerdown", onPointerDown);
+        viewport.addEventListener("pointermove", onPointerMove);
+        viewport.addEventListener("pointerup", onPointerUp);
+        viewport.addEventListener("pointercancel", onPointerUp);
+      })();
+    </script>
+  </body>
+</html>
