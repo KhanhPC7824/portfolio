@@ -1151,7 +1151,7 @@
           0 20px 50px rgba(0, 0, 0, 0.45),
           0 0 0 1px rgba(255, 255, 255, 0.04) inset;
         will-change: transform;
-        transition: opacity 0.35s var(--ease-out);
+        transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       .photo-card--ghost {
@@ -2673,15 +2673,22 @@
             caption: "",
           },
           {
-            src: "gallery/photo-13.jpg",  
+            src: "gallery/photo-14.jpg",  
             alt: "Gallery 14",
             caption: "",
           },
           {
-            src: "gallery/photo-13.jpg",  
+            src: "gallery/photo-15.jpg",  
             alt: "Gallery 15",
             caption: "",
           },
+          {
+            type: "video",
+            src: "gallery/video-1.mp4",   // hoặc .webm — đặt file trong thư mục gallery/
+            poster: "gallery/ten-anh.jpg", // tuỳ chọn: ảnh nền trước khi play
+            alt: "Mô tả ngắn cho accessibility",
+            caption: "",
+},
         ];
 
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -2759,6 +2766,94 @@
           applyCardTransform(card, 0, 0);
         }
 
+        function pauseVideosOnCard(card) {
+          if (!card) return;
+          var v = card.querySelector("video");
+          if (!v) return;
+          v.pause();
+          try {
+            v.currentTime = 0;
+          } catch (err) {}
+        }
+
+        function applyGhostDepthVisual(card, depth) {
+          if (!card) return;
+          card.classList.remove("photo-card--active");
+          card.classList.add("photo-card--ghost");
+          var scale = 1 - depth * 0.048;
+          var ty = depth * 14;
+          var tx = depth * 5;
+          var ghostRot = depth * 2.25;
+          card.style.transform =
+            "translate(" +
+            tx +
+            "px," +
+            ty +
+            "px) scale(" +
+            scale +
+            ") rotate(" +
+            ghostRot +
+            "deg)";
+          card.style.zIndex = String(4 - depth);
+          card.style.opacity = depth > 2 ? "0" : "1";
+        }
+
+        function applyActiveIdle(card) {
+          if (!card) return;
+          card.classList.remove("photo-card--ghost");
+          card.classList.add("photo-card--active");
+          card.style.zIndex = "5";
+          card.style.opacity = "1";
+          applyCardTransform(card, 0, 0);
+        }
+
+        function promoteStackAfterSwipe(exitingCard) {
+          photos.shift();
+          pauseVideosOnCard(exitingCard);
+          exitingCard.remove();
+
+          if (!photos.length) {
+            stackEl.innerHTML = "";
+            stackEl.classList.remove("is-dragging");
+            stackEl.classList.add("is-idle");
+            showDoneState();
+            updateCounter();
+            return;
+          }
+
+          showGalleryState();
+          var remaining = stackEl.querySelectorAll(".photo-card");
+          if (!remaining.length) {
+            renderStack();
+            return;
+          }
+
+          var ease = "cubic-bezier(0.22, 1, 0.36, 1)";
+          var dur = "0.42s";
+
+          var top = remaining[0];
+          top.style.transition = "none";
+          top.offsetHeight;
+          top.style.transition = "transform " + dur + " " + ease;
+          applyActiveIdle(top);
+
+          var i;
+          for (i = 1; i < remaining.length; i++) {
+            remaining[i].style.transition = "transform " + dur + " " + ease;
+            applyGhostDepthVisual(remaining[i], i);
+          }
+
+          if (photos.length >= 3 && remaining.length < 3) {
+            var fresh = buildCard(photos[2], 2);
+            stackEl.appendChild(fresh);
+          }
+
+          stackEl.classList.add("is-idle");
+          stackEl.classList.remove("is-dragging");
+          updateCounter();
+          syncGalleryPlayback();
+        }
+
         function syncGalleryPlayback() {
           var nodes = stackEl.querySelectorAll(".photo-card video");
           var i;
@@ -2785,23 +2880,7 @@
           var article = document.createElement("article");
           article.className = "photo-card photo-card--ghost";
           article.setAttribute("role", "group");
-
-          var scale = 1 - depth * 0.048;
-          var ty = depth * 14;
-          var tx = depth * 5;
-          var ghostRot = depth * 2.25;
-          article.style.transform =
-            "translate(" +
-            tx +
-            "px," +
-            ty +
-            "px) scale(" +
-            scale +
-            ") rotate(" +
-            ghostRot +
-            "deg)";
-          article.style.zIndex = String(4 - depth);
-          article.style.opacity = depth > 2 ? "0" : "1";
+          applyGhostDepthVisual(article, depth);
 
           var isVideo = item.type === "video";
 
@@ -2879,36 +2958,47 @@
           var exitRot =
             IDLE_ROT + (direction > 0 ? 22 : -22);
 
-          function afterRemove() {
-            photos.shift();
-            renderStack();
-          }
-
           if (skipAnimate || reduceMotion) {
             photos.shift();
             renderStack();
             return;
           }
 
-          active.style.transition =
-            "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1)";
-          active.style.transform =
-            "translate(" +
-            exitX +
-            "px, 0) rotate(" +
-            exitRot +
-            "deg)";
+          active.style.pointerEvents = "none";
+          var exitEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+          var exitMs = 420;
+
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              active.style.transition =
+                "transform " + exitMs + "ms " + exitEase;
+              active.style.transform =
+                "translate(" +
+                exitX +
+                "px, 0) rotate(" +
+                exitRot +
+                "deg)";
+            });
+          });
 
           var cleaned = false;
-          function doneOnce() {
+          function doneOnce(ev) {
             if (cleaned) return;
+            if (ev && ev.propertyName && ev.propertyName !== "transform") {
+              return;
+            }
             cleaned = true;
-            active.removeEventListener("transitionend", doneOnce);
-            afterRemove();
+            active.removeEventListener("transitionend", onTransEnd);
+            window.clearTimeout(failsafeTimer);
+            promoteStackAfterSwipe(active);
           }
 
-          active.addEventListener("transitionend", doneOnce);
-          window.setTimeout(doneOnce, 480);
+          function onTransEnd(ev) {
+            doneOnce(ev);
+          }
+
+          active.addEventListener("transitionend", onTransEnd);
+          var failsafeTimer = window.setTimeout(doneOnce, exitMs + 100);
         }
 
         function onStackPointerDown(e) {
